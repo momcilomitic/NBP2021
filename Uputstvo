@@ -1,0 +1,7 @@
+U svakom .cshtml.cs fajlu koji se nalaze u Pages folderu morate promeniti adresu i username i password za bazu podataka.
+        public GuideModel(ILogger<GuideModel> logger)
+        {
+            _logger = logger;
+            _driver = GraphDatabase.Driver("bolt://localhost:7687/", AuthTokens.Basic("admin", "admin"));
+            _client = new BoltGraphClient(_driver);
+        }
