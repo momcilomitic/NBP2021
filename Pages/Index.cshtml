@@ -1,0 +1,117 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+
+<div class="d-flex flex-column justify-content-between">
+    <div>
+
+        <button style="margin-bottom: 5px; width:100px" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            Login
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" asp-page-handler="Login">
+
+                            <div>Username:</div>
+                            <input asp-for="LoginInfo.username" />
+                            <div>Password:</div>
+                            <input type="password" asp-for="LoginInfo.password" />
+                            <input class="btn btn-secondary" type="submit" value="Login" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button style="margin-bottom: 5px; width:100px" type="button" class="btn btn-primary" data-toggle="modal" data-target="#registerModal">
+            Register
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="registerModalLabel">Register</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" asp-page-handler="Register">
+                            <div>Ime:</div>
+                            <input asp-for="NewUser.name" />
+                            <div>Prezime:</div>
+                            <input asp-for="NewUser.surname" />
+                            <div>Username:</div>
+                            <input asp-for="NewUser.username" />
+                            <div>Password:</div>
+                            <input type="password" asp-for="NewUser.password" />
+                            <input class="btn btn-secondary" type="submit" value="Register" asp-page-handler="Register" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @if (Model.Message != null)
+        {
+            <span class="alert-warning">@Model.Message</span>
+        }
+    </div>
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Naziv
+                </th>
+                <th>
+                    Datum kreiranja
+                </th>
+                <th>
+                    Akcije
+                </th>
+            </tr>
+        </thead>
+        @if (Model.Guides != null && Model.Guides.Count() > 0)
+        {
+            @foreach (Neo4JTest.Model.Guide item in Model.Guides)
+            {
+                <tr>
+                    <td>
+                        @item.naziv
+                    </td>
+                    <td>
+                        @item.datumKreiranja
+                    </td>
+                    <td class="d-flex">
+                        <a class="btn btn-secondary" asp-page="./Guide" asp-route-id="@item.id">View</a>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+    <div>
+        <form method="get">
+            <div>
+                <input type="text" asp-for="FilterString" />
+                <input class="btn btn-secondary" type="submit" value="Search" />
+            </div>
+        </form>
+    </div>
+</div>
+

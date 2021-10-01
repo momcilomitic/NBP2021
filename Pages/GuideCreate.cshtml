@@ -1,0 +1,71 @@
+﻿@page
+@model Neo4JTest.Pages.GuideCreateModel
+@{
+}
+
+<div>
+    <div>
+        <span>Dobrososao/la @Model.Korisnik.name @Model.Korisnik.surname</span>
+    </div>
+    <div class="d-flex">
+            <form method="post" enctype="multipart/form-data">
+                <div>Unesite naziv</div>
+                <input type="text" asp-for="Guide.naziv" />
+                <div>Unesite opis</div>
+                <textarea type="text" asp-for="Guide.opis"></textarea>
+                <div>Unesite kondicionu tezinu</div>
+                <input type="number" asp-for="Guide.kondTezina" min="1" max="10" />
+                <div>Unesite tehnicku tezinu</div>
+                <input type="number" asp-for="Guide.tehTezina" min="1" max="10" />
+                <div>Unesite duzinu trase</div>
+                <input type="number" asp-for="Guide.duzinaTrase" />
+                <div>Unesite visinsku razliku</div>
+                <input type="number" asp-for="Guide.visinskaRazlika" />
+                <div>
+                    Izaberite slike za vas guide:
+                    <input type="file" multiple="multiple" name="images" accept="image/*" />
+                </div>
+                <input style="margin-top: 5px" class="btn btn-secondary" type="submit" value="Kreiraj guide" />
+            </form>
+            <table class="table d-flex flex-column">
+                @*<thead>
+                    <tr>
+                        <th>
+                            Naziv
+                        </th>
+                        <th>
+                            Datum kreiranja
+                        </th>
+                        <th>
+                            Akcije
+                        </th>
+                    </tr>
+                </thead>*@
+                @if (Model.Korisnik != null && Model.Korisnik.guides.Count() > 0)
+                {
+                    @foreach (Neo4JTest.Model.Guide item in Model.Korisnik.guides)
+                    {
+                        <tr>
+                            <td>
+                                @item.naziv
+                            </td>
+                            <td>
+                                @item.datumKreiranja
+                            </td>
+                            <td class="d-flex">
+                                <form method="post" asp-page-handler="delete">
+                                    <button style="margin-right: 5px;" class="btn btn-secondary " asp-route-username="@Model.Korisnik.username" asp-route-id="@item.id" asp-page-handler="delete">Obrisi</button>
+                                </form>
+                                <div>
+                                    <a class="btn btn-secondary" asp-page="./GuideEdit" asp-route-id="@item.id" asp-route-username="@Model.Korisnik.username">Edit</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+    </div>
+    <footer class="footer text-muted">
+        <a asp-page="./Index" class="btn btn-primary">Logout</a>
+    </footer>
+</div>

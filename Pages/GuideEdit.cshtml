@@ -1,0 +1,25 @@
+﻿@page
+@model Neo4JTest.Pages.GuideEditModel
+@{
+}
+
+<div>
+    <form method="post" asp-page-handler="Edit">
+        <div>Unesite naziv</div>
+        <input type="text" asp-for="Input.naziv" />
+        <div>Unesite opis</div>
+        <input type="text" asp-for="Input.opis" />
+        <div>Unesite kondicionu tezinu</div>
+        <input type="number" asp-for="Input.kondTezina" min="1" max="10" />
+        <div>Unesite tehnicku tezinu</div>
+        <input type="number" asp-for="Input.tehTezina" min="1" max="10" />
+        <div>Unesite duzinu trase</div>
+        <input type="number" asp-for="Input.duzinaTrase" />
+        <div>Unesite visinsku razliku</div>
+        <input type="number" asp-for="Input.visinskaRazlika" />
+        <input type="hidden" asp-for="Username" value="@Model.Username" />
+        <input type="hidden" asp-for="Input.id" value="@Model.Input.id" />
+        <input type="hidden" asp-for="Input.datumKreiranja" value="@Model.Input.datumKreiranja" />
+        <input class="btn btn-secondary" type="submit" value="Izmeni guide" />
+    </form>
+</div>
